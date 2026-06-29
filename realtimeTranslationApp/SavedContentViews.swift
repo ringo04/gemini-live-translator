@@ -307,7 +307,7 @@ struct TranslationSessionDetailView: View {
                 
                 .background {
                     ZStack {
-                        Color(.white)
+                        Color(.secondarySystemGroupedBackground)
                         Color(.pink.opacity(0.08))
                     }
                 }
