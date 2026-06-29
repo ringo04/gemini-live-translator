@@ -42,19 +42,34 @@ struct SavedKeywordsListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \SavedKeyword.savedAt, order: .reverse) private var savedKeywords: [SavedKeyword]
     
+    @State private var searchText = ""
+    
+    private var filteredKeywords: [SavedKeyword] {
+        if searchText.isEmpty {
+            return savedKeywords
+        }
+        return savedKeywords.filter { keyword in
+            keyword.word.localizedStandardContains(searchText) ||
+            keyword.meaning.localizedStandardContains(searchText) ||
+            keyword.partOfSpeech.localizedStandardContains(searchText)
+        }
+    }
+    
     var body: some View {
         ZStack {
-            if savedKeywords.isEmpty {
-                ContentUnavailableView(
-                    "保存された単語はありません",
-                    systemImage: "star.slash",
-                    description: Text("解説カードの星マークをタップすると、ここに保存されます。")
-                )
-                .transition(.blurReplace)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if filteredKeywords.isEmpty {
+                if searchText.isEmpty {
+                    ContentUnavailableView(
+                        "保存された単語はありません",
+                        systemImage: "star.slash",
+                        description: Text("解説カードの星マークをタップすると、ここに保存されます。")
+                    )
+                } else {
+                    ContentUnavailableView.search(text: searchText)
+                }
             } else {
                 List {
-                    ForEach(savedKeywords) { keyword in
+                    ForEach(filteredKeywords) { keyword in
                         NavigationLink(destination: KeywordDetailView(keyword: keyword)) {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(keyword.partOfSpeech)
@@ -77,18 +92,15 @@ struct SavedKeywordsListView: View {
                     }
                     .onDelete(perform: deleteKeywords)
                 }
-                .transition(.blurReplace)
             }
         }
         .ignoresSafeArea(edges: [.bottom])
-        .animation(.easeInOut(duration: 0.3), value: savedKeywords.isEmpty)
+        .animation(.easeInOut(duration: 0.3), value: filteredKeywords)
+        .searchable(text: $searchText, prompt: "単語を検索")
     }
-    
     private func deleteKeywords(at offsets: IndexSet) {
-        for index in offsets {
-            let keyword = savedKeywords[index]
-            modelContext.delete(keyword)
-        }
+        let keywordsToDelete = offsets.map { filteredKeywords[$0] }
+        keywordsToDelete.forEach { modelContext.delete($0) }
     }
 }
 
@@ -167,6 +179,19 @@ struct TranslationHistoryListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \TranslationSession.date, order: .reverse) private var sessions: [TranslationSession]
     
+    @State private var searchText = ""
+    
+    private var filteredSessions: [TranslationSession] {
+        if searchText.isEmpty {
+            return sessions
+        }
+        return sessions.filter { session in
+            session.translatedText.localizedStandardContains(searchText) ||
+            session.originalText.localizedStandardContains(searchText) ||
+            session.targetLanguage.localizedName.localizedStandardContains(searchText)
+        }
+    }
+    
     var body: some View {
         ZStack {
             if sessions.isEmpty {
@@ -175,11 +200,12 @@ struct TranslationHistoryListView: View {
                     systemImage: "text.page.slash",
                     description: Text("翻訳を行うと、ここに履歴が保存されます。")
                 )
-                .transition(.blurReplace)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if filteredSessions.isEmpty {
+                ContentUnavailableView.search(text: searchText)
             } else {
                 List {
-                    ForEach(sessions) { session in
+                    ForEach(filteredSessions) { session in
                         NavigationLink(destination: TranslationSessionDetailView(session: session)) {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
@@ -209,16 +235,16 @@ struct TranslationHistoryListView: View {
                     }
                     .onDelete(perform: deleteSessions)
                 }
-                .transition(.blurReplace)
             }
         }
         .ignoresSafeArea(edges: [.bottom])
-        .animation(.easeInOut(duration: 0.3), value: sessions.isEmpty)
+        .animation(.easeInOut(duration: 0.3), value: filteredSessions)
+        .searchable(text: $searchText, placement: .toolbar, prompt: "翻訳履歴を検索")
     }
     
     private func deleteSessions(at offsets: IndexSet) {
         for index in offsets {
-            let session = sessions[index]
+            let session = filteredSessions[index]
             modelContext.delete(session)
         }
     }
