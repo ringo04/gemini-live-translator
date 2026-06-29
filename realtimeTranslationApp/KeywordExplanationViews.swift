@@ -61,7 +61,7 @@ struct ExplanationsSection: View {
                         VStack(spacing: 12) {
                             Image(systemName: "hand.point.up.left.and.text.fill")
                                 .font(.system(size: 30))
-                            Text("リアルタイム翻訳で表示されたフレーズや単語をタッチして、解説カードを作成します。")
+                            Text("リアルタイム翻訳で表示された単語やフレーズをタッチして、解説カードを作成します。")
                                 .font(.caption)
                                 .multilineTextAlignment(.center)
                         }

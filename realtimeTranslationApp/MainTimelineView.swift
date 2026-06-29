@@ -90,7 +90,7 @@ struct MainTimelineView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
-        .navigationTitle("翻訳タイムライン")
+        .navigationTitle("Gemini Live Translator")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
