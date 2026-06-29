@@ -5,6 +5,12 @@
 マイクに入力された音声（例: スピーチや会話）をリアルタイムに翻訳してスピーカーから再生し、タイムライン上のテキスト（翻訳・文字起こし）から気になる単語をタップすることで、その単語の「解説カード」を即座に生成・表示します。
 
 ---
+## 📱スクリーンショット
+<img width="201" height="437" alt="tempImagexwcicG" src="https://github.com/user-attachments/assets/54c08fa7-0ae6-4f21-81f0-2cbfb2360040" /><br>
+<img width="201" height="437" alt="tempImagekiNUHy" src="https://github.com/user-attachments/assets/d2121b34-db7a-4dd2-9548-1529a22b213e" />
+<img width="201" height="437" alt="tempImageUsCfLD" src="https://github.com/user-attachments/assets/1463d315-1306-4684-b39e-487dc65046a4" /><br>
+<img width="201" height="437" alt="tempImageeJWjtr" src="https://github.com/user-attachments/assets/af0bdd6a-c99c-46b7-9736-6c756c515b4a" />
+<img width="201" height="437" alt="tempImagewYb84W" src="https://github.com/user-attachments/assets/71715459-885b-4bbd-b6cd-e417ceeb97f9" />
 
 ## ✨ 主な機能
 
