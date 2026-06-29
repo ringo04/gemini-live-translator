@@ -94,7 +94,6 @@ struct SavedKeywordsListView: View {
                 }
             }
         }
-        .ignoresSafeArea(edges: [.bottom])
         .animation(.easeInOut(duration: 0.3), value: filteredKeywords)
         .searchable(text: $searchText, prompt: "単語を検索")
     }
@@ -237,7 +236,6 @@ struct TranslationHistoryListView: View {
                 }
             }
         }
-        .ignoresSafeArea(edges: [.bottom])
         .animation(.easeInOut(duration: 0.3), value: filteredSessions)
         .searchable(text: $searchText, placement: .toolbar, prompt: "翻訳履歴を検索")
     }
