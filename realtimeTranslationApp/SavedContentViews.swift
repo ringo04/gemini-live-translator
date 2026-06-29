@@ -263,6 +263,7 @@ struct TranslationSessionDetailView: View {
                 }
                 .padding(16)
                 .background(Color(.secondarySystemGroupedBackground), in: .rect(corners: .concentric(minimum: 16), isUniform: true))
+                
                 Image(systemName: "arrow.down")
                     .font(.footnote.weight(.bold))
                     .foregroundStyle(.pink.opacity(0.4))
@@ -279,6 +280,14 @@ struct TranslationSessionDetailView: View {
                 }
                 .padding(16)
                 .background(.pink.opacity(0.07), in: .rect(corners: .concentric(minimum: 16), isUniform: true))
+                
+                .background {
+                    ZStack {
+                        Color(.white)
+                        Color(.pink.opacity(0.08))
+                    }
+                }
+                .clipShape(.rect(corners: .concentric(minimum: 16), isUniform: true))
             }
             .padding(20)
             .containerShape(RoundedRectangle(cornerRadius: 32, style: .continuous))

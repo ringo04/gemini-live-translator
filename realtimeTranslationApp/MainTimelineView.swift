@@ -381,17 +381,17 @@ struct TranscriptionColumnView<Header: View>: View {
             .onChange(of: messages.count) { _, _ in
                 scrollToBottomIfNeeded(proxy)
             }
+            .scrollEdgeEffectStyle(.soft, for: .top)
             .safeAreaBar(edge: .top) {
                 header()
             }
-            .scrollEdgeEffectStyle(.soft, for: .top)
-            .glassEffect(
-                .regular.tint(backgroundColor),
-                in: .rect(
-                    cornerRadius: 16,
-                    style: .continuous
-                )
-            )
+            .background {
+                ZStack {
+                    Color(.secondarySystemGroupedBackground)
+                    backgroundColor
+                }
+            }
+            .clipShape(.rect(corners: .concentric(minimum: 16), isUniform: true))
             .onAppear {
                 proxy.scrollTo(
                     bottomAnchorID,
